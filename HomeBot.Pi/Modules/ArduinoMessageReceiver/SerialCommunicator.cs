@@ -11,6 +11,7 @@ namespace HomeBot.Pi.Modules.ArduinoMessageReceiver
         {
             // "/dev/ttyUSB0"
             sp = new SerialPort(portName, 9600, Parity.None, 8, StopBits.One);
+            sp.ReadTimeout = 2000;
         }
 
 

@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{19c5f534-bcb5-4e8e-bb93-4a2e86382397}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureDatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -70,5 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="sqlexpress.publish.xml" />
+    <None Include="azure.publish.xml" />
   </ItemGroup>
 </Project>

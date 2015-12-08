@@ -1,5 +1,5 @@
-﻿using HomeBot.Api.Models;
-using HomeBot.Api.Services;
+﻿using HomeBot.Core.Model;
+using HomeBot.Core.Services;
 using System.Web.Http;
 
 namespace HomeBot.Api.Controllers
@@ -7,10 +7,10 @@ namespace HomeBot.Api.Controllers
     [AllowAnonymous, RoutePrefix("api/event")]
     public class EventController : ApiController
     {
-        private readonly EventService _service = new EventService();
-        public EventController()
+        private readonly IEventService _service;
+        public EventController(IEventService service)
         {
-
+            _service = service;
         }
         
         [HttpPost, Route("")]
@@ -19,10 +19,10 @@ namespace HomeBot.Api.Controllers
             return Ok(_service.TransferMessage(model));
         }
 
-        [HttpGet, Route("recentEvents")]
-        public IHttpActionResult RecentEvents(EventMessageModel model)
+        [HttpGet, Route("recent")]
+        public IHttpActionResult RecentEvents()
         {
-            return Ok(_service.TransferMessage(model));
+            return Ok(_service.RecentEvents());
         }
 
 

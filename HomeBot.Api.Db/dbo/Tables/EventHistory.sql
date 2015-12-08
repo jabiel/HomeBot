@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[EventHistory] (
-    [Id]        INT            IDENTITY (1, 1) NOT NULL,
+    [Id]        INT            IDENTITY (1, 1) PRIMARY KEY NOT NULL,
     [Name]      VARCHAR (80)   NULL,
     [Content]   VARCHAR (2000) NULL,
     [SenderId]  VARCHAR (80)   NOT NULL,

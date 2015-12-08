@@ -36,7 +36,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -51,11 +60,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Api\EventServiceTests.cs" />
     <Compile Include="PiTests\ArduinoMessageReceiverTests.cs" />
     <Compile Include="Fakes\FakeSerailCommunicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HomeBot.Core\HomeBot.Core.csproj">
+      <Project>{f0358351-b5a5-4865-b98a-a120ec0e8d23}</Project>
+      <Name>HomeBot.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HomeBot.Pi\HomeBot.Pi.csproj">
       <Project>{af5be401-3287-4606-9303-c38887f19ee0}</Project>
       <Name>HomeBot.Pi</Name>
@@ -63,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

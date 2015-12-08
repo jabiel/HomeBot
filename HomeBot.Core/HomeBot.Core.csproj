@@ -30,8 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,7 +52,78 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IReceivedEvent.cs" />
+    <Compile Include="Model\Context\EventHistory.cs">
+      <DependentUpon>HomeBotModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context\EventState.cs">
+      <DependentUpon>HomeBotModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context\HomeBotModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeBotModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context\HomeBotModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeBotModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context\HomeBotModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeBotModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context\IHomeBotContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IHomeBotContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context\ReceivedEvent.cs">
+      <DependentUpon>HomeBotModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context\SentEvent.cs">
+      <DependentUpon>HomeBotModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EventMessageModel.cs" />
+    <Compile Include="Model\Event2Model.cs" />
+    <Compile Include="Model\EventModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\IEventService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Model\Context\HomeBotModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HomeBotModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Model\Context\HomeBotModel.edmx.diagram">
+      <DependentUpon>HomeBotModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\Context\HomeBotModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HomeBotModel.edmx</DependentUpon>
+      <LastGenOutput>HomeBotModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Context\HomeBotModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HomeBotModel.edmx</DependentUpon>
+      <LastGenOutput>HomeBotModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Context\IHomeBotContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IHomeBotContext.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,7 +11,8 @@ int rfPacketsToSend = 10;
 // Pins
 int PIR = 2;
 int LED = 13;
-int RFTX = 9;   // Transmitter is connected to Arduino Pin #10
+int RFTX = 9;   
+int RFPOWER = 8;// do tranzystora
 
 int rfAlertCode = 666; // code send when motion detected
 
@@ -19,6 +20,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(PIR, INPUT);
   pinMode(LED, OUTPUT);
+  pinMode(RFPOWER, OUTPUT);
   rf.enableTransmit(RFTX);
 
   PRR = bit(PRTIM1);                           // only keep timer 0 going
@@ -30,6 +32,7 @@ void setup() {
 
 void loop() {
   int ll = HIGH;
+  digitalWrite(RFPOWER, HIGH);// wlacz zasilanie w rf
   delay(100);
   Serial.println("Motion detected");
   for (int i = 0; i < rfPacketsToSend; i++)
@@ -39,7 +42,7 @@ void loop() {
     digitalWrite(LED, ll);
     ll = ll == HIGH ? LOW : HIGH;
   }
-  
+  digitalWrite(RFPOWER, LOW); // wylacz rf
   Serial.println("");
   
   Sleepy::powerDown();

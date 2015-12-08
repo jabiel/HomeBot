@@ -30,7 +30,7 @@ namespace HomeBot.Pi.Providers.Api
                 SenderId = evt.SenderId
             };
 
-            await table.InsertAsync(entity);
+            //await table.InsertAsync(entity);
         }
     }
 }
