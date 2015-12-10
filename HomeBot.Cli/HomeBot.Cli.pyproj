@@ -12,6 +12,8 @@
     <OutputPath>.</OutputPath>
     <Name>HomeBot.Cli</Name>
     <RootNamespace>HomeBot.Cli</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <PublishUrl>\\raspberrypi\pi\src\pub</PublishUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
