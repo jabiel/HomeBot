@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 import sys, serial, time, json
 import logging, logging.handlers
 import RPi.GPIO as GPIO
@@ -18,6 +18,7 @@ logger.info("Initializing script")
 thingspeak = Thingspeak.ThingspeakClient('CHNLDXPXT2S5L19L')
 thingspeak_delay = 15
 buzzer_pin = 11
+
 
 ser = serial.Serial(
     port='/dev/ttyUSB0',
