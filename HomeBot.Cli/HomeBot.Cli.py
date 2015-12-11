@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 import sys, serial, time, json
 import logging, logging.handlers
 import RPi.GPIO as GPIO
