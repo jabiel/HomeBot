@@ -33,7 +33,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="scripts\" />
+    <Folder Include="scripts\etc\" />
+    <Folder Include="scripts\etc\init.d\" />
     <Folder Include="utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\etc\init.d\homebot" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
