@@ -25,9 +25,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HomeBot.Cli.py" />
-    <Compile Include="Thingspeak.py">
+    <Compile Include="utils\Thingspeak.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="utils\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="utils\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
