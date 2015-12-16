@@ -25,6 +25,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HomeBot.Cli.py" />
+    <Compile Include="utils\Arduino.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="utils\Buzzer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="utils\Thingspeak.py">
       <SubType>Code</SubType>
     </Compile>
