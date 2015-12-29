@@ -1,4 +1,5 @@
-﻿import urllib, urllib2, json, time
+﻿import urllib, urllib2, sys, json, time
+import thread
 
 
 class ThingspeakClient(object):
@@ -27,7 +28,7 @@ class ThingspeakClient(object):
             print('Send to thingspeak: {0}'.format(params));
         
             try:
-                response = urllib2.urlopen(self._apiUrl, params).read()
+                response = urllib.request.urlopen(self._apiUrl, params).read()
                 print('{0}'.format(response))
                 self._lastSendTime = time.time()
                 self._lastParamsSent = par.copy()

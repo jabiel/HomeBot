@@ -9,9 +9,10 @@ class Buzzer(object):
         self._buzzStateChangesToStop = 0
         self._buzzState = False
         self._buzzerPin = buzzerPin
-        self._idleTime = 20 # po ilu sek moze sie ponownie wlaczyc 
+        self._idleTime = 30 # po ilu sek moze sie ponownie wlaczyc 
         self._lastStartTime = 0.0
         GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
         GPIO.setup(self._buzzerPin, GPIO.OUT)
         GPIO.output(self._buzzerPin, False)
 

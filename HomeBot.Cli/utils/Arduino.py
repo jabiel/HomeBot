@@ -5,7 +5,7 @@ class ArduinoSerial(object):
 
     def __init__(self, portName):
         self._portName = portName
-        self._idleTime = 20 # po ilu sek moze sie ponownie wlaczyc 
+        self._idleTime = 20 # po ilu sek moze sie ponownie zminic stan 
         self._lastStartTime = 0.0
         self._ser = serial.Serial(
             port=self._portName,#'/dev/ttyUSB0',
