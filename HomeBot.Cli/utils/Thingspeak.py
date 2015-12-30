@@ -28,18 +28,26 @@ class ThingspeakClient(object):
             print('Send to thingspeak: {0}'.format(params));
         
             try:
-                response = urllib.request.urlopen(self._apiUrl, params).read()
+                response = urllib2.urlopen(self._apiUrl, params).read()
                 print('{0}'.format(response))
                 self._lastSendTime = time.time()
                 self._lastParamsSent = par.copy()
             except urllib2.HTTPError as err:
                 print("Exception: {0}".format(err))
+            except AttributeError as aerr:
+                print("AttributeError: {0}".format(aerr))
             except:
                 print("Unhadled error:", sys.exc_info()[0])
             pass
 
     def sendIfAvailable(self, model):
         if (self._lastSendTime + self._thingspeak_delay) < time.time():
+            self.send(model)
+            return True
+        return False
+
+    def sendIfAvailableAndTrue(self, model, condition):
+        if ((self._lastSendTime + self._thingspeak_delay) < time.time()) & condition:
             self.send(model)
             return True
         return False

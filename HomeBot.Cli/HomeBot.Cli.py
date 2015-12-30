@@ -35,11 +35,10 @@ def main():
     
     ino = utils.Arduino.ArduinoSerial('/dev/ttyUSB0')
     buzz = utils.Buzzer.Buzzer(buzzer_pin)
-    data = {'field1': 0, 'field2': 0}
-    buzz_mod = 0
     lastTime = time.time()
     while 1 :
-        time.sleep(0.5)        
+        time.sleep(0.5)
+        data = {'field1': 0, 'field2': 0}
         ino.readFromSerial(data)
 
         buzz.BuzzOnChange((data['field2']==1), 1)
@@ -48,8 +47,8 @@ def main():
             for z in data.keys():
                 if z.startswith('field'):
                     data[z] = 0;
-            print('Reset data: {0}'.format(data))
-            lastTime = time.time()
+            #print('Reset data: {0}'.format(data))
+            #lastTime = time.time()
         
 
 if __name__ == "__main__":
