@@ -16,20 +16,42 @@ class ArduinoSerial(object):
         )
         self._ser.isOpen()
 
-    def readFromSerial(self, data):
+    def readFromSerial(self):
         out = ''
         while self._ser.inWaiting() > 0:
             out += self._ser.read(1)
 
         if out != '':
-            #print (">>" + out)
-            if out.find('{msgid') >= 0:
-                out = self._fixJson(out)
-                self.decodeMessage(out, data)
+            return self.decodeCsvMessage(out)
+        return {}
+            #if out.find('{msgid') >= 0:
+            #    out = self._fixJson(out)
+            #    self.decodeJsonMessage(out, data)
+            #else:
+            #    print("Unexpexted json data: " + out)
+    """csv messgae: DATA,3,1100001 where  DATA is header, 3 is timespan 1100001 is message from sensor id 11 with value 1"""
+    def decodeCsvMessage(self, csvStr):
+        data = {}
+        try:
+            if csvStr.startswith("DATA"):
+                lst = csvStr.split(",")
+                if len(lst) > 2:
+                    for i in range(2, len(lst)):
+                        sensorId = long(lst[i]) / 100000
+                        sensorVal = long(lst[i]) - (sensorId * 100000)
+                        data["sensor" + str(sensorId)] = sensorVal
+       
+                        print('sensor: {0}'.format(data))
             else:
-                print("Unexpexted serial data: " + out)
+                print('>{0}'.format(csvStr))
 
-    def decodeMessage(self, jsonStr, data):
+            return data        
+        except:
+            print("decode error:", sys.exc_info()[0])
+        pass
+
+
+    def decodeJsonMessage(self, jsonStr, data):
         #print ("decoding json: " + jsonStr)
         try:
             obj = json.loads(jsonStr)
@@ -49,7 +71,7 @@ class ArduinoSerial(object):
         
         except:
             print("decode error:", sys.exc_info()[0])
-        pass
+        pass    
 
     def _fixJson(self, str):
         str = str.replace('msgid', '"msgid"')

@@ -8,28 +8,27 @@ const long interval = 1000;
 unsigned long previousMillis = 0;
 void setup() {
   Serial.begin(9600);
-  Serial.print("Starting..");
+  Serial.print("INFO,Starting Arduino hub..");
   mySwitch.enableReceive(RFPIN);  // Receiver on inerrupt 0 => that is pin #2
 }
 
 void loop() {
   unsigned long currentMillis = millis();
-  int rfv = ReceiveFromRf();
+  long rfv = ReceiveFromRf();
   if(rfv > 0)
     addToList(rfv);
-
+  
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
 
-    String msg = FormatJsonMsg();
+    String msg = FormatCsvMsg();
     Serial.println(msg);
-    //Serial.print( "." );
   }
 }
 
-int codesToSend[100]; // interval at which to blink (milliseconds)
+long codesToSend[100];
 int ctsLen = 0;
-void addToList(int c)
+void addToList(long c)
 {
   bool alreadyOnList = false;
   for (int i=0;i<ctsLen;i++)
@@ -43,7 +42,7 @@ void addToList(int c)
     ctsLen++;  
   }
 }
-
+// obsolete
 String FormatJsonMsg()
 {
   String s;
@@ -60,13 +59,31 @@ String FormatJsonMsg()
   return s;
 }
 
-int ReceiveFromRf()
+String FormatCsvMsg()
 {
-  int receivedValue = 0;
+  String s = "DATA,";
+  s += String(previousMillis >> 10, DEC);
+  //s += ",";
+
+  for (int i=0;i<ctsLen;i++)
+  {
+    //if(i>0) 
+    s+= ",";
+    s += String(codesToSend[i], DEC);
+  }
+  ctsLen = 0; // reset list to not send it next time
+  return s;
+}
+
+
+long ReceiveFromRf()
+{
+  long receivedValue = 0;
   if (mySwitch.available()) {
     receivedValue = mySwitch.getReceivedValue();
     mySwitch.resetAvailable();
   }
+  
   return receivedValue;
 }
 

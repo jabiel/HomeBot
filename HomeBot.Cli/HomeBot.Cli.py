@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, time
+import sys, time, datetime
 import logging, logging.handlers
 import RPi.GPIO as GPIO
 import utils.Arduino, utils.Thingspeak, utils.Buzzer
@@ -20,7 +20,6 @@ buzzer_pin = 11
 
 class MyLogger(object):
     def __init__(self, logger, level):
-        """Needs a logger and a logger level."""
         self.logger = logger
         self.level = level
 
@@ -31,6 +30,21 @@ class MyLogger(object):
 sys.stdout = MyLogger(logger, logging.INFO)
 sys.stderr = MyLogger(logger, logging.ERROR)
 
+"""Motion sensors are from 11 to 19"""
+def hasMotionSensors(data):
+    for i in range(11,20):
+        if "sensor" + str(i) in data.keys():
+            return True
+    return False
+
+"""At night buzz will take longer to wake up ewerynody """
+def buzzOnNight():
+    hour = time.localtime(time.time()).tm_hour
+    #print('hour: {0}'.format(hour))
+    if 1 < hour < 6:
+        return 3
+    return 1
+
 def main():
     
     ino = utils.Arduino.ArduinoSerial('/dev/ttyUSB0')
@@ -38,17 +52,14 @@ def main():
     lastTime = time.time()
     while 1 :
         time.sleep(0.5)
-        data = {'field1': 0, 'field2': 0}
-        ino.readFromSerial(data)
+        sensors = ino.readFromSerial()
+        buzz.BuzzOnChange(hasMotionSensors(sensors), buzzOnNight())
+        # mapowanie z sensorXX na fieldXX z thingspeak:
+        thingSpeakData = {}
+        if "sensor11" in sensors.keys():
+            thingSpeakData["field2"] = 1    
 
-        buzz.BuzzOnChange((data['field2']==1), 1)
-
-        if thingspeak.sendIfAvailableAndChanged(data):
-            for z in data.keys():
-                if z.startswith('field'):
-                    data[z] = 0;
-            #print('Reset data: {0}'.format(data))
-            #lastTime = time.time()
+        thingspeak.sendIfAvailable(thingSpeakData)
         
 
 if __name__ == "__main__":
